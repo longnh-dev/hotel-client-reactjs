@@ -25,15 +25,19 @@ export function UserAuthContextProvider({ children }) {
   async function logIn(username, password, rememberMe) {
     try{
       const userAuth = await axios.post("http://localhost:5200/api/v1/authentication/jwt/login",{username, password, rememberMe});
-      console.log(userAuth);
       
+      if(userAuth.data.data.tokenString){
+        navigate("/");
+      }
+      else{
+        localStorage.clear();
+        navigate("/error");
+      }
+
       localStorage.setItem("tokenString", userAuth.data.data.tokenString);
       localStorage.setItem("userModel", JSON.stringify(userAuth.data.data.userModel));
       alert("Login success!");
       
-      if(userAuth.data){
-        navigate("/");
-      }
     }
     catch(err){
       console.log(err.response.data.message);

@@ -29,7 +29,7 @@ const Rooms = () => {
   }, []);
 
   const onShowSizeChange = async (current, pageSize) => {
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${pageSize}&page=${current}&filter=${filter}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${pageSize}&page=${current}&filter=${filter}&sort=${sort}`, {headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -37,7 +37,7 @@ const Rooms = () => {
 
   const filterVipRoom = "%7B%22category%22%3A%22VIP%22%7D"
   const handleFilterVipRoom = async (current, pageSize) => {
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterVipRoom}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterVipRoom}&sort=${sort}`,{headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -45,7 +45,7 @@ const Rooms = () => {
 
   const filterVipExtraRoom = "%7B%22category%22%3A%22VIP-EXTRA%22%7D"
   const handleFilterVipExtraRoom = async (current, pageSize) => {
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterVipExtraRoom}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterVipExtraRoom}&sort=${sort}`,{headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -54,7 +54,7 @@ const Rooms = () => {
   const filterPresidentRoom = "%7B%22category%22%3A%22PRESIDENT%22%7D"
 
   const handleFilterPresidentRoom = async (current, pageSize) => {
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterPresidentRoom}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterPresidentRoom}&sort=${sort}`,{headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -62,7 +62,7 @@ const Rooms = () => {
 
   const filterAvailableStatus = "%7B%22status%22%3A%22AVAILABLE%22%7D"
   const handleFilterAvailableRoom = async () => {
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterAvailableStatus}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterAvailableStatus}&sort=${sort}`,{headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -70,7 +70,7 @@ const Rooms = () => {
 
   const filterUnAvailableStatus = "%7B%22status%22%3A%22UNAVAILABLE%22%7D"
   const handleFilterUnAvailableRoom = async () => {
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterUnAvailableStatus}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterUnAvailableStatus}&sort=${sort}`,{headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -78,7 +78,7 @@ const Rooms = () => {
 
   const onSearch  = async (e) => {
     const filterFullTextSearch = `%7B%22fullTextSearch%22%3A%22${e.target.value}%22%7D`;
-    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterFullTextSearch}&sort=${sort}`);
+    var res = await axios.get(`http://localhost:5200/api/v1/rooms?size=${20}&page=${1}&filter=${filterFullTextSearch}&sort=${sort}`,{headers: {"Authorization" : `Bearer ${token}`}});
     if(res.data.data.content){
       setRooms(res.data.data.content);
     }
@@ -113,7 +113,14 @@ const Rooms = () => {
         onClick={onSearch}
       />
     </div>
-    
+
+    {/* <div class="input-group mb-4 border rounded-pill p-1">
+            <div class="input-group-prepend border-0">
+              <button id="button-addon4" type="button" class="btn btn-link text-info"><i class="fa fa-search"></i></button>
+            </div>
+            <i type="search" placeholder="What're you searching for?" aria-describedby="button-addon4" class="form-control bg-none border-0">
+          </div>
+     */}
     <RoomsList rooms={rooms}/>
     <Pagination
       showSizeChanger
